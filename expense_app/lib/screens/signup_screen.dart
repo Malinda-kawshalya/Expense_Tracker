@@ -1,14 +1,14 @@
-// lib/screens/login_screen.dart
+// lib/screens/signup_screen.dart
 import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../services/auth_service.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignupScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignupScreenState createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Welcome Back!',
+                'Create Account',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               SizedBox(height: 20),
@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() {
                             _isLoading = true;
                           });
-                          final user = await _auth.signInWithEmailAndPassword(
+                          final user = await _auth.registerWithEmailAndPassword(
                             _emailController.text,
                             _passwordController.text,
                           );
@@ -62,19 +62,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacementNamed(context, '/home');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Login failed. Check your credentials.')),
+                              SnackBar(content: Text('Signup failed. Email already in use or invalid.')),
                             );
                           }
                         }
                       },
-                      child: Text('Login'),
+                      child: Text('Sign Up'),
                     ),
               SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signup');
+                  Navigator.pop(context);
                 },
-                child: Text("Don't have an account? Sign up"),
+                child: Text("Already have an account? Login"),
               ),
             ],
           ),
